@@ -1,0 +1,53 @@
+{% extends 'tasks/base.html' %}
+{% load static %}
+{% block title %}Home | TaskMaster{% endblock %}
+
+{% block content %}
+<div id="homeCarousel" class="carousel slide shadow-sm mb-5" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        {% for slide in slides %}
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.first %}active{% endif %}"
+                    aria-current="{% if forloop.first %}true{% endif %}"
+                    aria-label="Slide {{ forloop.counter }}"></button>
+        {% endfor %}
+    </div>
+    <div class="carousel-inner rounded">
+        {% for slide in slides %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{% static slide.image %}" class="d-block w-100" alt="{{ slide.title }}">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>{{ slide.title }}</h2>
+                    <p>{{ slide.text }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<h3 class="mb-4 text-center">Why use TaskMaster?</h3>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    {% for card in cards %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static card.image %}" class="card-img-top" alt="{{ card.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ card.title }}</h5>
+                    <p class="card-text">{{ card.text }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="text-center mt-5">
+    <a href="{% url 'task_page' %}" class="btn btn-primary btn-lg">Register a Task</a>
+    <a href="{% url 'task_list' %}" class="btn btn-outline-secondary btn-lg">View Task List</a>
+</div>
+{% endblock %}
